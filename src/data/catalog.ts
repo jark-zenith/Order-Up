@@ -17,5 +17,6 @@ export const initialProducts:Product[]=[
 {id:"fruit-bread",name:"Fruit Bread",category:"Bakery",badge:"Sweet",description:"Soft loaf loaded with raisins, cranberries and warm baking spice.",price:null,image:"/food-placeholder.svg",available:true},
 {id:"fresh-yoghurt",name:"Fresh Yoghurt",category:"Bakery",badge:"Chilled",description:"500ml chilled bottles in vanilla, strawberry and chocolate.",price:null,image:"/food-placeholder.svg",available:true},
 {id:"breakfast-package",name:"Breakfast Package",category:"Breakfast",badge:"AM only",description:"Breakfast box with eggs, sausages, toast, tomatoes, fruit and pastry.",price:null,image:"/food-placeholder.svg",available:true},
-{id:"kids-meal",name:"Kids Meal",category:"Kids",badge:"For the crew",description:"Kid-sized main, fun side and a drink in a branded kids box.",price:null,image:"/food-placeholder.svg",available:true}
+{id:"kids-meal",name:"Kids Meal",category:"Kids",badge:"For the crew",description:"Kid-sized main, fun side and a drink in a branded kids box.",price:null,image:"/food-placeholder.svg",available:true},
+{id:"triple-taco-box",name:"Triple Taco Box",category:"Signatures",badge:"This week's special",description:"A three-taco box built around Wrap n' Roll's current weekly special concept.",price:null,image:"/food-placeholder.svg",available:true}
 ];
