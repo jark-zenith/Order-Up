@@ -6,9 +6,9 @@ export type PaymentMethod="MoMo"|"Cash";
 export type MomoNetwork="MTN MoMo"|"Telecel Cash"|"AT Money";
 export type OrderStatus="Pending"|"Confirmed"|"Preparing"|"Ready"|"Completed";
 export type Order={
-  id:string;createdAt:string;customerName:string;customerEmail:string;customerPhone:string;
+  id:string;createdAt:string;customerName:string;customerEmail:string;customerPhone?:string;
   items:CartItem[];orderType:"pickup"|"delivery";location:string;address:string;notes:string;
-  paymentMethod:PaymentMethod;momoNetwork?:MomoNetwork;paymentReference?:string;deliveryFee:number;status:OrderStatus;
+  paymentMethod?:PaymentMethod;momoNetwork?:MomoNetwork;paymentReference?:string;deliveryFee?:number;status:OrderStatus;
 };
 
 const k={products:"ou-products",cart:"ou-cart",orders:"ou-orders",session:"ou-session",locations:"ou-locations"};
