@@ -1,6 +1,6 @@
 import type {Product} from "../data/catalog";
 
-export type CartItem={productId:string;quantity:number;note?:string};
+export type CartItem={productId:string;quantity:number;note?:string;unitPrice?:number};
 export type Session={role:"customer"|"admin";name:string;email:string;phone?:string};
 export type PaymentMethod="MoMo"|"Cash";
 export type MomoNetwork="MTN MoMo"|"Telecel Cash"|"AT Money";
