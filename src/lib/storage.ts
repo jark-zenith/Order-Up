@@ -11,9 +11,57 @@ export type Order={
   paymentMethod?:PaymentMethod;momoNetwork?:MomoNetwork;paymentReference?:string;deliveryFee?:number;status:OrderStatus;
 };
 
-const k={products:"ou-products",cart:"ou-cart",orders:"ou-orders",session:"ou-session",locations:"ou-locations"};
+export type BusinessLocation={name:string;area:string;open:boolean;hours:string};
+export type BusinessSettings={
+  businessName:string;
+  ownerName:string;
+  businessEmail:string;
+  phone:string;
+  whatsapp:string;
+  paymentNumber:string;
+  paymentNetwork:MomoNetwork|"";
+  paymentRecipient:string;
+  address:string;
+  website:string;
+  hours:string;
+  deliveryFee:number;
+};
+
+export type AdminProfile={
+  name:string;
+  email:string;
+  phone:string;
+  passwordHash:string;
+  setupCompletedAt:string;
+};
+
+const k={
+  products:"ou-products",cart:"ou-cart",orders:"ou-orders",session:"ou-session",
+  locations:"ou-locations",business:"ou-business",admin:"ou-admin"
+};
 const read=<T,>(key:string,fallback:T):T=>{try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw) as T:fallback}catch{return fallback}};
 const write=(key:string,value:unknown)=>localStorage.setItem(key,JSON.stringify(value));
+
+export const defaultBusiness:BusinessSettings={
+  businessName:"Wrap n' Roll",
+  ownerName:"",
+  businessEmail:"",
+  phone:"",
+  whatsapp:"",
+  paymentNumber:"",
+  paymentNetwork:"",
+  paymentRecipient:"",
+  address:"Kumasi, Ghana",
+  website:"https://wrapnrollfoods.com/",
+  hours:"8am–11pm",
+  deliveryFee:15
+};
+
+export const defaultLocations:BusinessLocation[]=[
+  {name:"Asafo",area:"Kumasi",open:true,hours:"8am–11pm"},
+  {name:"KNUST Campus",area:"Kumasi",open:true,hours:"8am–11pm"},
+  {name:"Mobile Vans",area:"Kumasi",open:true,hours:"8am–11pm"}
+];
 
 export const storage={
   getProducts:(fallback:Product[])=>read<Product[]>(k.products,fallback),
@@ -24,7 +72,26 @@ export const storage={
   saveOrders:(v:Order[])=>write(k.orders,v),
   getSession:()=>read<Session|null>(k.session,null),
   saveSession:(v:Session|null)=>v?write(k.session,v):localStorage.removeItem(k.session),
-  getLocations:()=>read(k.locations,[{name:"Asafo",area:"Kumasi",open:true,hours:"8am–11pm"},{name:"KNUST Campus",area:"Kumasi",open:true,hours:"8am–11pm"},{name:"Mobile Vans",area:"Kumasi",open:true,hours:"8am–11pm"}]),
-  saveLocations:(v:unknown)=>write(k.locations,v)
+  getLocations:()=>read<BusinessLocation[]>(k.locations,defaultLocations),
+  saveLocations:(v:BusinessLocation[])=>write(k.locations,v),
+  getBusiness:()=>({...defaultBusiness,...read<Partial<BusinessSettings>>(k.business,{})}),
+  saveBusiness:(v:BusinessSettings)=>write(k.business,v),
+  getAdmin:()=>read<AdminProfile|null>(k.admin,null),
+  saveAdmin:(v:AdminProfile)=>write(k.admin,v),
+  clearAdmin:()=>localStorage.removeItem(k.admin)
 };
+
+export async function hashPassword(value:string){
+  const data=new TextEncoder().encode(value);
+  if(globalThis.crypto?.subtle){
+    const digest=await globalThis.crypto.subtle.digest("SHA-256",data);
+    return Array.from(new Uint8Array(digest)).map(x=>x.toString(16).padStart(2,"0")).join("");
+  }
+  return btoa(value);
+}
+
+export async function verifyPassword(value:string,hash:string){
+  return (await hashPassword(value))===hash;
+}
+
 export const makeOrderId=()=> "ORD-"+Math.random().toString(36).slice(2,8).toUpperCase();
