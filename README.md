@@ -1,5 +1,9 @@
 # Order-Up
 
+## Client requirements applied
+
+Online customer payments are directed to the client-confirmed MoMo number **0596-121-704**. The public Wrap n' Roll reference also lists 0596-121-704 as its official WhatsApp/number and shows Asafo, KNUST Campus and Mobile Vans in Kumasi with Mon–Sun 8am–11pm service messaging.
+
 Order-Up is a mobile-first restaurant ordering PWA with a customer storefront and an owner control room.
 
 ## Owner dashboard

@@ -31,11 +31,13 @@ export const defaultBusiness:BusinessSettings={
   paymentNetwork:"",paymentRecipient:"",address:"Kumasi, Ghana",
   website:"https://wrapnrollfoods.com/",hours:"Mon–Sun · 8am–11pm",deliveryFee:15
 };
+
 export const defaultLocations:BusinessLocation[]=[
   {name:"Asafo",area:"Kumasi",open:true,hours:"8am–11pm"},
   {name:"KNUST Campus",area:"Kumasi",open:true,hours:"8am–11pm"},
   {name:"Mobile Vans",area:"Kumasi",open:true,hours:"8am–11pm"}
 ];
+
 export const storage={
   getProducts:(fallback:Product[])=>read<Product[]>(k.products,fallback),
   saveProducts:(v:Product[])=>write(k.products,v),
@@ -53,9 +55,13 @@ export const storage={
   saveAdmin:(v:AdminProfile)=>write(k.admin,v),
   clearAdmin:()=>localStorage.removeItem(k.admin)
 };
+
 export async function hashPassword(value:string){
   const data=new TextEncoder().encode(value);
-  if(globalThis.crypto?.subtle){const digest=await globalThis.crypto.subtle.digest("SHA-256",data);return Array.from(new Uint8Array(digest)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+  if(globalThis.crypto?.subtle){
+    const digest=await globalThis.crypto.subtle.digest("SHA-256",data);
+    return Array.from(new Uint8Array(digest)).map(x=>x.toString(16).padStart(2,"0")).join("");
+  }
   return btoa(value);
 }
 export async function verifyPassword(value:string,hash:string){return (await hashPassword(value))===hash}
