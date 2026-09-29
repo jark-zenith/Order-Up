@@ -56,7 +56,7 @@ export default function App(){
   </header>
 
   <main>
-   {page==="home"&&<Home onMenu={()=>setPage("menu")} onAdd={add} products={products} business={business}/>}
+   {page==="home"&&<HomePage onMenu={()=>setPage("menu")} onAdd={add} products={products} business={business}/>}
    {page==="menu"&&<Menu products={visible} cat={cat} setCat={setCat} query={query} setQuery={setQuery} onAdd={add} onSelect={setProduct}/>}
    {page==="orders"&&<Orders session={session} orders={currentOrders} products={products} onLogin={()=>setLogin(true)}/>}
    {page==="account"&&<Account session={session} orders={currentOrders} onLogin={()=>setLogin(true)} onLogout={()=>{setSession(null);storage.saveSession(null);setPage("home")}} onAdmin={()=>setPage("admin")}/>}
@@ -83,7 +83,7 @@ export default function App(){
  </div>
 }
 
-function Home({onMenu,onAdd,products,business}:{onMenu:()=>void;onAdd:(p:Product)=>void;products:Product[];business:BusinessSettings}){
+function HomePage({onMenu,onAdd,products,business}:{onMenu:()=>void;onAdd:(p:Product)=>void;products:Product[];business:BusinessSettings}){
  const special=products.find(p=>p.id==="triple-taco-box");const picks=[special,...products.filter(p=>p.id!=="triple-taco-box")].filter(Boolean).slice(0,3) as Product[];
  return <section className="page"><div className="hero"><div><small className="eyebrow"><Sparkles size={13}/> {business.businessName||"Order-Up"}</small><h1>Order ahead.<br/><span>Eat happy.</span></h1><p>A mobile-first ordering experience for {business.businessName||"your restaurant"}, with owner controls for menu, orders, payments and business information.</p><div className="actions"><button className="primary" onClick={onMenu}>Start an order <ArrowRight size={17}/></button>{business.whatsapp?<a className="secondary" href={"https://wa.me/"+business.whatsapp.replace(/[^0-9]/g,"")} target="_blank" rel="noreferrer">Order on WhatsApp</a>:<button className="secondary" onClick={()=>setPageNoop()}>Owner can add WhatsApp</button>}</div><div className="meta"><span><Clock3 size={14}/> {business.hours}</span><span><MapPin size={14}/> {business.address}</span><span><Wallet size={14}/> {business.paymentNumber?"MoMo configured":"Payment setup pending"}</span></div></div><div className="heroart"><div className="tag">owner-controlled ordering</div><div className="food"><div>TACO<br/><small>BOX</small></div></div><b>Order-Up dashboard.</b><span>Customer orders + owner control in one place.</span></div></div><div className="sectionhead"><div><small>fan favourites</small><h2>Start with something people love.</h2></div><button className="text" onClick={onMenu}>See full menu <ArrowRight size={16}/></button></div><div className="grid3">{picks.map(p=><Card key={p.id} p={p} onAdd={onAdd}/>)}</div><div className="features"><div>⚡<b>Order to-go</b><span>Pickup or delivery</span></div><div>₵<b>MoMo payments</b><span>Pay to 0596-121-704</span></div><div>✓<b>Full control room</b><span>Menu, orders and business setup</span></div></div></section>
 }
