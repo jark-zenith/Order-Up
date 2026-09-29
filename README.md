@@ -11,6 +11,7 @@ The owner/admin area now includes:
 - Dashboard KPIs for completed revenue, average order value and open queue.
 - Full order search/filtering and status control.
 - Product create/edit, pricing, availability and catalog metadata.
+- Owner product-photo upload, preview and removal with browser-local image persistence.
 - Financial/payment breakdowns and CSV payment reports.
 - Downloadable order, menu and business backups.
 - Locally stored payment/business verification documents with download/delete controls.
